@@ -1,0 +1,130 @@
+{%  extends 'base.html' %}
+
+{% block title %} Home {% endblock %}
+
+
+
+{% block content %}
+
+<div class="row main-row">
+    {% include 'includes/sidebar.html' %}
+    <div class="col-lg-9">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="download">
+                    <a href="{{url_for('download_pdf')}}" class="btn btn-outline-success" style="margin-top: 5px;">Download pdf</a>
+                </div>
+            </div>
+        </div>
+        <main>
+    
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="boxes">
+                    <h4 style="text-align: center;">This is to certify that you are a member of the </h4>
+                    <p style="text-align: center;">KABARAK UNIVERSITY  RETIREMENT BENEFITS SCHEME</p>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Shillings</th>
+                                    <th>Employee</th>
+                                    <th>Employer</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tr>
+                                <td>Opening balance @01.01.2022</td>
+                                <td>KSHS</td>
+                                <td>{{ (data[5]|int) // 30 }}</td>
+                                <td>{{ (data[12]|int) // 30 }}</td>
+                                <td>{{ ((data[5]|int) + (data[12]|int)) // 30 }}</td>
+                            </tr>
+                            <tr>
+                                <td>Contributions remitted Year 2022 </td>
+                                <td>KSHS</td>
+                                <td>{{ (data[6]|int) // 30 }}</td>
+                                <td>{{ (data[13]|int) // 30 }}</td>
+                                <td>{{ ((data[6]|int) + (data[13]|int)) // 30 }}</td>
+                            </tr>
+                            <tr>
+                                <td>interest on opening balance</td>
+                                <td>KSHS</td>
+                                <td>{{ (data[8]|int) // 30 }}</td>
+                                <td>{{ (data[15]|int) // 30 }}</td>
+                                <td>{{ ((data[8]|int) + (data[15]|int)) // 30 }}</td>
+                            </tr>
+                            <tr>
+                                <td>Interest on Contributions Year 2022</td>
+                                <td>KSHS</td>
+                                <td>{{ (data[9]|int) // 30 }}</td>
+                                <td>{{ (data[16]|int) // 30 }}</td>
+                                <td>{{ ((data[9]|int) + (data[16]|int)) // 30 }}</td>
+                            </tr>
+                            <tr style="color: brown;font-weight: bolder;">
+                                <td>Subtotal</td>
+                                <td>KSHS</td>
+                                <td>{{ ((data[5]|int) + (data[6]|int) + (data[8]|int) + (data[9]|int)) // 30 }}</td>
+                                <td>{{ ((data[12]|int) + (data[13]|int) + (data[15]|int) + (data[16]|int)) // 30 }}</td>
+                                <td>{{ ((data[5]|int) + (data[12]|int) + (data[6]|int) + (data[13]|int) + (data[8]|int) + (data[15]|int) + (data[9]|int) + (data[16]|int)) // 30 }}</td>
+                            </tr>
+                            <tr>
+                                <td>unremitted contributions</td>
+                                <td>KSHS</td>
+                                <td>0</td>
+                                <td>{{ (data[17]|int) // 30 }}</td>
+                                <td>{{ (data[17]|int) // 30 }}</td>
+                            </tr>
+                            <tr>
+                                <td>Interest on unremitted contributions </td>
+                                <td>KSHS</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>NSSF TIER II</td>
+                                <td>KSHS</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>Opening balance @01.01.2022</td>
+                                <td>KSHS</td>
+                                <td>{{ (data[5]|int) // 30 }}</td>
+                                <td>{{ (data[12]|int) // 30 }}</td>
+                                <td>{{ ((data[5]|int) + (data[12]|int)) // 30 }}</td>
+                            </tr>
+                            <tr>
+                                <td>Contributions remitted Year 2022 </td>
+                                <td>KSHS</td>
+                                <td>{{ (data[6]|int) // 30 }}</td>
+                                <td>{{ (data[13]|int) // 30 }}</td>
+                                <td>{{ ((data[6]|int) + (data[13]|int)) // 30 }}</td>
+                            </tr>
+                            <tr>
+                                <td>interest on opening balance</td>
+                                <td>KSHS</td>
+                                <td>{{ (data[8]|int) // 30 }}</td>
+                                <td>{{ (data[15]|int) // 30 }}</td>
+                                <td>{{ ((data[8]|int) + (data[15]|int)) // 30 }}</td>
+                            </tr>
+                            <tr style="color: brown;font-weight: bolder;">
+                                <td>Total Balances @30.12.22</td>
+                                <td>KSHS</td>
+                                <td>{{ ((data[5]|int) + (data[6]|int) + (data[8]|int) + (data[9]|int) + (data[7]|int) + (data[8]|int) + (data[6]|int) + (data[5]|int)) // 30 }}</td>
+                                <td>{{ ((data[12]|int) + (data[13]|int) + (data[15]|int) + (data[16]|int) + (data[17]|int) + (data[11]|int) + (data[14]|int) + (data[15]|int) + (data[13]|int) + (data[12]|int)) // 30 }}</td>
+                                <td>{{ ((data[5]|int) + (data[12]|int) + (data[6]|int) + (data[13]|int) + (data[8]|int) + (data[15]|int) + (data[9]|int) + (data[16]|int) + (data[17]|int) + (data[11]|int) + (data[7]|int) + (data[14]|int) + (data[5]|int) + (data[12]|int) + (data[8]|int) + (data[15]|int)+ (data[6]|int) + (data[13]|int)) // 30 }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </main>
+    </div>
+</div>
+
+{% endblock %}

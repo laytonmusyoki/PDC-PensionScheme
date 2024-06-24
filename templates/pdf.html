@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pdf</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap-grid.min.css">
+    <style>
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+    
+        th, td {
+          border: 1px solid #555;
+          padding: 8px;
+          text-align: left;
+        }
+        .image{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .image img{
+            border-radius: 50%;
+        }
+      </style>
+</head>
+<body>
+<div class="container">
+    {% with messages=get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+        {% for category,msg in messages %}
+        
+            <div class="alert alert-{{category}} alert-dismissible fade show  name" role="alert" >
+            <strong> {{msg}}</strong>
+            <button type="button" class="btn-close name1" data-bs-dismiss="alert" aria-label="close"></button>
+            </div>
+
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="elements">
+                <div class="image">
+                    <img src="{{url_for('static',filename='images/scheme.jpg')}}" style="width: 150px;" alt="">
+                </div>
+
+                <h3 style="text-align: center;">This is to certify that you are a member of the </h3>
+                <p style="font-size: 12px;text-align: center;">KABARAK UNIVERSITY  RETIREMENT BENEFITS SCHEME</p>
+                <p style="text-align: center;"><strong>PERSONAL DETAILS</strong></p>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="elements">
+                <div class="responsive" style="float: left;">
+                    <h5>NAME OF THE MEMBER:  <span style="font-size: 11px;"><i>{{session['username']}}</i></span></h5>
+                    <h5>DATE OF BIRTH: <span style="font-size: 11px;"><i>{{data[23]}}</i></span></h5>
+                    <h5>JOINING DATE: <span style="font-size: 11px;"><i>{{data[25]}}</i></span></h5>
+                </div>
+                <div class="responsive" style="float: right;">
+                    <h5>MEMBERSHIP NO: <span style="font-size: 11px;"><i>{{session['code']}}</i></span></h5>
+                    <h5>DATE OF EMPLOYMENT: <span style="font-size: 11px;"><i>{{data[24]}}</i></span></h5>
+                    <h5>RETIREMENT DATE: <span style="font-size: 11px;"><i>{{data[26]}}</i></span></h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="elements">
+                <div class="table-responsive" style="font-size: 10px;">
+                    <table class="table table-hover table-striped">
+                        <tr>
+                            <th>Description</th>
+                            <th>Shillings</th>
+                            <th>Employee</th>
+                            <th>Employer</th>
+                            <th>Total</th>
+                        </tr>
+                        <tr>
+                            <td>Opening balance @01.01.2022</td>
+                            <td>KSHS</td>
+                            <td>{{ (data[5]|int) // 30 }}</td>
+                            <td>{{ (data[12]|int) // 30 }}</td>
+                            <td>{{ ((data[5]|int) + (data[12]|int)) // 30 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Contributions remitted Year 2022 </td>
+                            <td>KSHS</td>
+                            <td>{{ (data[6]|int) // 30 }}</td>
+                            <td>{{ (data[13]|int) // 30 }}</td>
+                            <td>{{ ((data[6]|int) + (data[13]|int)) // 30 }}</td>
+                        </tr>
+                        <tr>
+                            <td>interest on opening balance</td>
+                            <td>KSHS</td>
+                            <td>{{ (data[8]|int) // 30 }}</td>
+                            <td>{{ (data[15]|int) // 30 }}</td>
+                            <td>{{ ((data[8]|int) + (data[15]|int)) // 30 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Interest on Contributions Year 2022</td>
+                            <td>KSHS</td>
+                            <td>{{ (data[9]|int) // 30 }}</td>
+                            <td>{{ (data[16]|int) // 30 }}</td>
+                            <td>{{ ((data[9]|int) + (data[16]|int)) // 30 }}</td>
+                        </tr>
+                        <tr style="color: brown;font-weight: bolder;">
+                            <td>Subtotal</td>
+                            <td>KSHS</td>
+                            <td>{{ ((data[5]|int) + (data[6]|int) + (data[8]|int) + (data[9]|int)) // 30 }}</td>
+                            <td>{{ ((data[12]|int) + (data[13]|int) + (data[15]|int) + (data[16]|int)) // 30 }}</td>
+                            <td>{{ ((data[5]|int) + (data[12]|int) + (data[6]|int) + (data[13]|int) + (data[8]|int) + (data[15]|int) + (data[9]|int) + (data[16]|int)) // 30 }}</td>
+                        </tr>
+                        <tr>
+                            <td>unremitted contributions</td>
+                            <td>KSHS</td>
+                            <td>0</td>
+                            <td>{{ (data[17]|int) // 30 }}</td>
+                            <td>{{ (data[17]|int) // 30 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Interest on unremitted contributions </td>
+                            <td>KSHS</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>NSSF TIER II</td>
+                            <td>KSHS</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Opening balance @01.01.2022</td>
+                            <td>KSHS</td>
+                            <td>{{ (data[5]|int) // 30 }}</td>
+                            <td>{{ (data[12]|int) // 30 }}</td>
+                            <td>{{ ((data[5]|int) + (data[12]|int)) // 30 }}</td>
+                        </tr>
+                        <tr>
+                            <td>Contributions remitted Year 2022 </td>
+                            <td>KSHS</td>
+                            <td>{{ (data[6]|int) // 30 }}</td>
+                            <td>{{ (data[13]|int) // 30 }}</td>
+                            <td>{{ ((data[6]|int) + (data[13]|int)) // 30 }}</td>
+                        </tr>
+                        <tr>
+                            <td>interest on opening balance</td>
+                            <td>KSHS</td>
+                            <td>{{ (data[8]|int) // 30 }}</td>
+                            <td>{{ (data[15]|int) // 30 }}</td>
+                            <td>{{ ((data[8]|int) + (data[15]|int)) // 30 }}</td>
+                        </tr>
+                        <tr style="color: brown;font-weight: bolder;">
+                            <td>Total Balances @30.12.22</td>
+                            <td>KSHS</td>
+                            <td>{{ ((data[5]|int) + (data[6]|int) + (data[8]|int) + (data[9]|int) + (data[7]|int) + (data[8]|int) + (data[6]|int) + (data[5]|int)) // 30 }}</td>
+                            <td>{{ ((data[12]|int) + (data[13]|int) + (data[15]|int) + (data[16]|int) + (data[17]|int) + (data[11]|int) + (data[14]|int) + (data[15]|int) + (data[13]|int) + (data[12]|int)) // 30 }}</td>
+                            <td>{{ ((data[5]|int) + (data[12]|int) + (data[6]|int) + (data[13]|int) + (data[8]|int) + (data[15]|int) + (data[9]|int) + (data[16]|int) + (data[17]|int) + (data[11]|int) + (data[7]|int) + (data[14]|int) + (data[5]|int) + (data[12]|int) + (data[8]|int) + (data[15]|int)+ (data[6]|int) + (data[13]|int)) // 30 }}</td>
+                        </tr>
+                    </table>
+                    <p style="margin-top: 12px;font-weight: bold;"><strong>NOTE</strong>: The amount payable on exit is subjected to the pensions of the TRUST DEEDS and RULEs of the scheme</p>
+                </div>
+                <h3 style="font-size: 13px;">Prepared by:
+                    <ul style="list-style-type: square;color: #555;">
+                        <li>Maxwell Leleur</li>
+                        <li>Dennis Oginga</li>
+                        <li>Baraka Onyango</li>
+                        <li>Viola cherono</li>
+                        
+                    </ul>
+                    Supervised by:
+                    <ul>
+                        <li style="list-style-type: disc; color: #555;"> Mr. Geoffrey Emenyi</h3></li>
+                    </ul>
+                    
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
+
+
+
+
+<!-- 
+UPDATE `data`
+SET
+    `date_of_birth` = DATE_ADD('1940-01-01', INTERVAL RAND() * (365*40) DAY),
+    `date_of_employment` = DATE_ADD('2000-01-01', INTERVAL RAND() * (365*10) DAY),
+    `joining_date` = DATE_ADD('2000-01-01', INTERVAL RAND() * (365*10) DAY),
+    `retirement_date` = DATE_ADD(`date_of_birth`, INTERVAL 65 YEAR)
+WHERE
+    `M_NO` = 'C13609057143'; -->

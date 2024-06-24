@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pdf</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap-grid.min.css">
+    <style>
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+    
+        th, td {
+          border: 1px solid black;
+          padding: 8px;
+          text-align: left;
+        }
+        .image{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .image img{
+            border-radius: 50%;
+        }
+      </style>
+</head>
+<body>
+<div class="container">
+    {% with messages=get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+        {% for category,msg in messages %}
+        
+            <div class="alert alert-{{category}} alert-dismissible fade show  name" role="alert" >
+            <strong> {{msg}}</strong>
+            <button type="button" class="btn-close name1" data-bs-dismiss="alert" aria-label="close"></button>
+            </div>
+
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="elements">
+                <div class="image">
+                    <img src="{{url_for('static',filename='images/scheme.jpg')}}" style="width: 150px;" alt="">
+                </div>
+
+                <h3 style="text-align: center;">This is to certify that you are a member of the </h3>
+                <p style="font-size: 12px;text-align: center;">KABARAK UNIVERSITY  RETIREMENT BENEFITS SCHEME</p>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="elements">
+                <div class="responsive">
+                    <h3>PERSONAL DETAILS</h3>
+                    <h5>NAME OF THE MEMBER:  <span style="font-size: 10px;"><i>{{session['username']}}</i></span></h5>
+                    <h5>MEMBERSHIP NO: <span style="font-size: 10px;"><i>{{session['code']}}</i></span></h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="elements">
+                <div class="table-responsive" style="font-size: 10px;">
+                    <table class="table table-hover table-striped">
+                        <tr>
+                            <th>Description</th>
+                            <th>Shillings</th>
+                            <th>Employee</th>
+                            <th>Employer</th>
+                            <th>Total</th>
+                        </tr>
+                        {% for data in datas %}
+                        <tr>
+                            <td>Opening balance scb @1.07.2010</td>
+                            <td>{{data[2]}}</td>
+                            <td>{{data[1]}}</td>
+                            <td>KSHS</td>
+                            <td>{{ (data[5]|int) // 30 }}</td>
+                            <td>{{ (data[12]|int) // 30 }}</td>
+                            <td>{{ ((data[5]|int) + (data[12]|int)) // 30 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <h3 style="font-size: 13px;">Prepared by:
+                    <ul style="list-style-type: disc;color: black;">
+                        <li>Maxwell Leleur</li>
+                        <li>Dennis Oginga</li>
+                        <li>Baraka Onyango</li>
+                        <li>Viola cherono</li>
+                        
+                    </ul>
+                    Supervised by:
+                    <ul>
+                        <li style="list-style-type: none; color: black;"> Mr. Geoffrey Emenyi</h3></li>
+                    </ul>
+                    
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

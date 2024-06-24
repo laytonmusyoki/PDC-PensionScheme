@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+</head>
+<body>
+    <div class="login-section">
+        <div class="image">
+            <img src="{{url_for('static',filename='images/scheme.jpg')}}" alt="">
+        </div>
+        <div class="login-container">
+            <h3>KURBS</h3>
+            <form action="" method="post">
+                <div class="box">
+                    <h5>WELCOME BACK !! | Login</h5>
+                    {% with messages=get_flashed_messages(with_categories=True) %}
+                    {% if messages %}
+                    {% for category,msg in messages %}
+                    
+                        <div class="alert alert-{{category}} alert-dismissible fade show  name" style="margin-top: 4px;" role="alert" >
+                        <strong> {{msg}}</strong>
+                        <button type="button" class="btn-close name1" data-bs-dismiss="alert" aria-label="close"></button>
+                        </div>
+
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                    <label for="name"><strong>Membership Name:</strong></label>
+                    <input type="text" name="name" value="{{name}}" placeholder="Enter your membership name">
+                    <label for="code"><strong>Membership Number:</strong></label>
+                    <input type="text" name="code" value="{{code}}" placeholder="Enter your membership number">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <input type="checkbox" class="checkbox"> Remember Me
+                        </div>
+                        <div class="col-lg-6">
+                            <p><a href="">Forgotten Password?</a></p>
+                        </div>
+                    </div>
+                    <button class="btns" type="submit">SIGN IN</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="{{url_for('static',filename='bootstrap/js/bootstrap.min.js')}}"></script>
+</body>
+</html>

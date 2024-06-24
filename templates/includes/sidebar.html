@@ -1,0 +1,33 @@
+<div class="col-lg-3">
+    <div class="nav-links">
+        <p>Welcome, <span>{{session['username']}} !</span></p>
+        <div class="dashboard-nav">
+            <a href="{{url_for('home')}}"class="links">
+                <h5><i class="fa-solid fa-house"></i></h5>
+                <h5>Home</h5>
+            </a>
+            {% if session['role']=="admin" %}
+            <a href="{{url_for('admin')}}"class="links">
+                <h5><i class="fa-solid fa-chart-line"></i></h5>
+                <h5>Dashboard</h5>
+            </a>
+            <a href="{{url_for('add')}}"class="links">
+                <h5><i class="fa-solid fa-plus"></i></h5>
+                <h5>Add User</h5>
+            </a>
+            <a href=""class="links">
+                <h5><i class="fa-solid fa-user-minus"></i></h5>
+                <h5>Delete User</h5>
+            </a>
+            {% endif %}
+            <a href=""class="links">
+                <h5><i class="fa-regular fa-user"></i></h5>
+                <h5>Profile</h5>
+            </a>
+            <a href="{{url_for('logout')}}"class="links">
+                <h5><i class="fa-solid fa-arrow-right-from-bracket"></i></h5>
+                <h5>Logout</h5>
+            </a>
+        </div>
+    </div>
+</div>

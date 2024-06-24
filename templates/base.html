@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}KURBS |  {% endblock %}</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+    <script src="https://kit.fontawesome.com/8a42449199.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+   <div class="navbar-content">
+    <div class="menu" id="menu-open">
+        <h3>=</h3>
+    </div>
+    <div class="logo">
+        <div class="logo-image">
+            <img src="/static/images/scheme.jpg" alt="">
+        </div>
+        <h2>KURBS</h2>
+    </div>
+    <div class="navs">
+        {% if 'username' in session %}
+        <a href=""><strong><span class="clock" id="clock" style="color: brown;"></span></strong></a>
+        {% if session['role']=="admin" %}
+        <a href="{{url_for('admin')}}">Admin</a>
+        {% endif %}
+        <a href="{{url_for('logout')}}"><span></span><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+        {% else %}
+        <a href="">Login</a>
+        {% endif %}
+    </div>
+   </div>
+
+   <!-- menu small screen -->
+   <div class="side" id="side">
+    <div class="top">
+        <h5>Good Evening <span>Layton !</span></h5>
+        <h3 id="menu-close">X</h3>
+    </div>
+    <div class="dashboard-nav">
+        {% if 'username' in session %}
+        <a href="{{url_for('home')}}">
+            <div class="links">
+            <i class="fa-solid fa-chart-line"></i>
+            <h5>Home</h5>
+            </div>
+        </a>
+        {% if session['role']=="admin" %}
+        <a href="{{url_for('admin')}}">
+            <div class="links">
+            <i class="fa-solid fa-chart-line"></i>
+            <h5>Dashboard</h5>
+            </div>
+        </a>
+        <a href="{{url_for('add')}}">
+            <div class="links">
+            <i class="fa-solid fa-chart-line"></i>
+            <h5>Add User</h5>
+            </div>
+        </a>
+        <a href="">
+            <div class="links">
+            <i class="fa-solid fa-chart-line"></i>
+            <h5>Delete User</h5>
+            </div>
+        </a>
+        {% endif %}
+        <a href="">
+            <div class="links">
+            <i class="fa-solid fa-chart-line"></i>
+            <h5>Profile</h5>
+            </div>
+        </a>
+        <a href="{{url_for('logout')}}">
+            <div class="links">
+            <i class="fa-solid fa-chart-line"></i>
+            <h5>Logout</h5>
+            </div>
+        </a>
+        {% endif %}
+    </div>
+   </div>
+
+
+    {% block content %}
+    {% endblock %}
+
+
+    <script>
+        var menu_open=document.getElementById('menu-open');
+        var menu_close=document.getElementById('menu-close');
+        var side=document.getElementById('side');
+
+        menu_open.addEventListener('click',()=>{
+            side.classList.add('side-active')
+        })
+        menu_close.addEventListener('click',()=>{
+            side.classList.remove('side-active')
+        })
+
+        setInterval(function(){
+        let date=new Date();
+        var clock=document.getElementById('clock');
+        clock.innerHTML=
+        date.getHours()+":"+
+        date.getMinutes()+":"+
+        date.getSeconds()
+        },1000);
+
+    
+    </script>
+
+    <script src="{{url_for('static',filename='bootstrap/js/bootstrap.min.js')}}"></script>
+</body>
+</html>
