@@ -361,6 +361,15 @@ main .boxes p{
     background: #fff;
     justify-content: end;
 }
+.downloads{
+    box-shadow: hsl(0, 0%, 80%)0 0 16px;
+    padding: 8px;
+    margin: 10px;
+    border-radius: 10px;
+    display: flex;
+    background: #fff;
+    justify-content: start;
+}
 
 table th{
     font-weight: bold;

@@ -209,12 +209,12 @@ def category_pdf(category):
 @app.route('/users')
 def users():
     role=session['role']
-    if role=="Admin":
+    if role=="admin":
         cur = connection.cursor()
         cur.execute('SELECT * FROM data')
-        data = cur.fetchone()
+        data = cur.fetchall()
         connection.commit()
-        return render_template('users.html')
+        return render_template('users.html',data=data)
     else:
         return "Not allowed"
 
