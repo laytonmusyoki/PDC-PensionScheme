@@ -28,18 +28,6 @@
 </head>
 <body>
 <div class="container">
-    {% with messages=get_flashed_messages(with_categories=True) %}
-        {% if messages %}
-        {% for category,msg in messages %}
-        
-            <div class="alert alert-{{category}} alert-dismissible fade show  name" role="alert" >
-            <strong> {{msg}}</strong>
-            <button type="button" class="btn-close name1" data-bs-dismiss="alert" aria-label="close"></button>
-            </div>
-
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
     <div class="row">
         <div class="col-lg-4">
             <div class="elements">
@@ -84,7 +72,7 @@
                 <h3 style="font-size: 13px;">Prepared by:
                     <ul style="list-style-type: disc;color: black;">
                         <li>Maxwell Leleur</li>
-                        <li>Dennis Oginga</li>
+                        <li>Layton Matheka</li>
                         <li>Baraka Onyango</li>
                         <li>Viola cherono</li>
                         

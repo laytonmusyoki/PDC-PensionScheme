@@ -4,19 +4,19 @@ import pymysql
 app=Flask(__name__)
 
 app.secret_key='yvvrcyeryueyruehddsnjnjn'
-# connection=pymysql.connect(
-#     host='localhost',
-#     user='root',
-#     password='',
-#     database='employee_data'
-# )
-
 connection=pymysql.connect(
-    host='db4free.net',
-    user='pension',
-    password='pensionscheme',
-    database='pension'
+    host='localhost',
+    user='root',
+    password='',
+    database='employee_data'
 )
+
+# connection=pymysql.connect(
+#     host='db4free.net',
+#     user='pension',
+#     password='pensionscheme',
+#     database='pension'
+# )
 
 @app.route('/',methods=['POST','GET'])
 def login():
@@ -128,82 +128,101 @@ def category_pdf(category):
                 cur.execute('SELECT * FROM data')
                 data=cur.fetchall()
                 if category=="Opening balance scb @1.07.2010":
-                    html_content = render_template('category/ob_scb.html', datas=data, base_url=base_url)
+                    html_content = render_template('pdfs/ob_scb.html', datas=data, base_url=base_url)
                     pdf = HTML(string=html_content, base_url=base_url).write_pdf()
                     response = make_response(pdf)
                     response.headers['Content-Disposition'] = 'attachment; filename=Opening balance scb @1.07.2010.pdf'
                     response.headers['Content-Type'] = 'application/pdf'
                     return response
                 elif category=="Contributions remitted Year 2010-11":
-                    html_content = render_template('category/remitted.html', datas=data, base_url=base_url)
+                    html_content = render_template('pdfs/remitted.html', datas=data, base_url=base_url)
                     pdf = HTML(string=html_content, base_url=base_url).write_pdf()
                     response = make_response(pdf)
                     response.headers['Content-Disposition'] = 'attachment; filename=Contributions remitted Year 2010-11.pdf'
                     response.headers['Content-Type'] = 'application/pdf'
                     return response
                 elif category=="bio":
-                    html_content = render_template('category/bio.html', datas=data, base_url=base_url)
+                    html_content = render_template('pdfs/bio.html', datas=data, base_url=base_url)
                     pdf = HTML(string=html_content, base_url=base_url).write_pdf()
                     response = make_response(pdf)
                     response.headers['Content-Disposition'] = 'attachment; filename=bio.pdf'
                     response.headers['Content-Type'] = 'application/pdf'
                     return response
                 elif category=="interest on opening balance scb 2010-11":
-                    html_content = render_template('category/interest on opening balance scb.html', datas=data, base_url=base_url)
+                    html_content = render_template('pdfs/interest on opening balance scb.html', datas=data, base_url=base_url)
                     pdf = HTML(string=html_content, base_url=base_url).write_pdf()
                     response = make_response(pdf)
                     response.headers['Content-Disposition'] = 'attachment; filename=interest on opening balance scb 2010-11.pdf'
                     response.headers['Content-Type'] = 'application/pdf'
                     return response
                 elif category=="Interest on Contributions Year 2010-11":
-                    html_content = render_template('category/Interest on Contributions Year.html', datas=data, base_url=base_url)
+                    html_content = render_template('pdfs/Interest on Contributions Year.html', datas=data, base_url=base_url)
                     pdf = HTML(string=html_content, base_url=base_url).write_pdf()
                     response = make_response(pdf)
                     response.headers['Content-Disposition'] = 'attachment; filename=Interest on Contributions Year 2010-11.pdf'
                     response.headers['Content-Type'] = 'application/pdf'
                     return response
                 elif category=="unremitted contributions":
-                    html_content = render_template('category/unremitted contributions.html', datas=data, base_url=base_url)
+                    html_content = render_template('pdfs/unremitted contributions.html', datas=data, base_url=base_url)
                     pdf = HTML(string=html_content, base_url=base_url).write_pdf()
                     response = make_response(pdf)
                     response.headers['Content-Disposition'] = 'attachment; filename=unremitted contributions.pdf'
                     response.headers['Content-Type'] = 'application/pdf'
                     return response
                 elif category=="Interest on unremitted contributions":
-                    html_content = render_template('category/Interest on unremitted.html', datas=data, base_url=base_url)
+                    html_content = render_template('pdfs/Interest on unremitted.html', datas=data, base_url=base_url)
                     pdf = HTML(string=html_content, base_url=base_url).write_pdf()
                     response = make_response(pdf)
                     response.headers['Content-Disposition'] = 'attachment; filename=Interest on unremitted contributions.pdf'
                     response.headers['Content-Type'] = 'application/pdf'
                     return response
                 elif category=="INHRBS":
-                    html_content = render_template('category/INHRBS.html', datas=data, base_url=base_url)
+                    html_content = render_template('pdfs/INHRBS.html', datas=data, base_url=base_url)
                     pdf = HTML(string=html_content, base_url=base_url).write_pdf()
                     response = make_response(pdf)
                     response.headers['Content-Disposition'] = 'attachment; filename=INHRBS.pdf'
                     response.headers['Content-Type'] = 'application/pdf'
                     return response
                 elif category=="Interest due to INHRBS":
-                    html_content = render_template('category/Interest due to INHRBS.html', datas=data, base_url=base_url)
+                    html_content = render_template('pdfs/Interest due to INHRBS.html', datas=data, base_url=base_url)
                     pdf = HTML(string=html_content, base_url=base_url).write_pdf()
                     response = make_response(pdf)
                     response.headers['Content-Disposition'] = 'attachment; filename=Interest due to INHRBS.pdf'
                     response.headers['Content-Type'] = 'application/pdf'
                     return response
                 elif category=="NIC Funds @1.2.2011":
-                    html_content = render_template('category/NIC Funds @1.2.2011.html', datas=data, base_url=base_url)
+                    html_content = render_template('pdfs/NIC Funds @1.2.2011.html', datas=data, base_url=base_url)
                     pdf = HTML(string=html_content, base_url=base_url).write_pdf()
                     response = make_response(pdf)
                     response.headers['Content-Disposition'] = 'attachment; filename=NIC Funds @1.2.2011.pdf'
                     response.headers['Content-Type'] = 'application/pdf'
                     return response
                 elif category=="Interest due to NIC opening balance":
-                    html_content = render_template('category/Interest due to NIC opening balance.html', datas=data, base_url=base_url)
+                    html_content = render_template('pdfs/Interest due to NIC opening balance.html', datas=data, base_url=base_url)
                     pdf = HTML(string=html_content, base_url=base_url).write_pdf()
                     response = make_response(pdf)
                     response.headers['Content-Disposition'] = 'attachment; filename=Interest due to NIC opening balance.pdf'
                     response.headers['Content-Type'] = 'application/pdf'
                     return response
+
+
+@app.route('/users')
+def users():
+    role=session['role']
+    if role=="Admin":
+        cur = connection.cursor()
+        cur.execute('SELECT * FROM data')
+        data = cur.fetchone()
+        connection.commit()
+        return render_template('users.html')
+    else:
+        return "Not allowed"
+
+
+
+# @app.route('/delete_user')
+# def deleteUser():
+
 
 
 @app.route('/download_pdf')
