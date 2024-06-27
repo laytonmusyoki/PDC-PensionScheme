@@ -4,19 +4,19 @@ import pymysql
 app=Flask(__name__)
 
 app.secret_key='yvvrcyeryueyruehddsnjnjn'
-connection=pymysql.connect(
-    host='localhost',
-    user='root',
-    password='',
-    database='employee_data'
-)
-
 # connection=pymysql.connect(
-#     host='db4free.net',
-#     user='pension',
-#     password='pensionscheme',
-#     database='pension'
+#     host='localhost',
+#     user='root',
+#     password='',
+#     database='employee_data'
 # )
+
+connection=pymysql.connect(
+    host='db4free.net',
+    user='pension',
+    password='pensionscheme',
+    database='pension'
+)
 
 @app.route('/',methods=['POST','GET'])
 def login():
@@ -220,8 +220,32 @@ def users():
 
 
 
-# @app.route('/delete_user')
-# def deleteUser():
+@app.route('/delete/<id>')
+def deleteUser(id):
+    role=session['role']
+    if role=="admin":
+        cur = connection.cursor()
+        cur.execute('DELETE FROM data WHERE M_NO=%s', (id,))
+        connection.commit()
+        flash('User deleted successfully','success')
+        return redirect(url_for('users'))
+    else:
+        return "Not allowed"
+    
+
+@app.route('/profile')
+def profile():
+    if 'username' and 'code' not in session:
+        flash('Please login first','warning')
+        return redirect(url_for('login'))
+    else:
+        name=session['username']
+        code=session['code']
+        cur=connection.cursor()
+        cur.execute('SELECT * FROM data WHERE M_NO=%s AND NAME=%s',(code,name,))
+        data=cur.fetchone()
+        connection.commit()
+        return render_template('profile.html',data=data)
 
 
 
