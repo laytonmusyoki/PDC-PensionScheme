@@ -5,11 +5,18 @@ import pymysql
 app = Flask(__name__)
 
 app.secret_key = 'yvvrcyeryueyruehddsnjnjn'
-connection = pymysql.connect(
-    host='localhost',
-    user='root',
-    password='',
-    database='employee_data'
+# connection = pymysql.connect(
+#     host='localhost',
+#     user='root',
+#     password='',
+#     database='employee_data'
+# )
+
+connection=pymysql.connect(
+    host='db4free.net',
+    user='pension',
+    password='pensionscheme',
+    database='pension'
 )
 
 @app.route('/', methods=['POST', 'GET'])
