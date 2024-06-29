@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: your-service-name
+    env: python
+    plan: free
+    buildCommand: ./install_wkhtmltopdf.sh && pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:8000 your_flask_app:app
+    envVars:
+      - key: FLASK_ENV
+        value: production

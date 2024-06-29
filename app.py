@@ -1,23 +1,19 @@
-from flask import Flask, redirect, render_template, session, request, flash, url_for, make_response
 import pdfkit
+from flask import Flask, render_template, session, redirect, url_for, flash, request, make_response
 import pymysql
 
 app = Flask(__name__)
 
 app.secret_key = 'yvvrcyeryueyruehddsnjnjn'
-# connection = pymysql.connect(
-#     host='localhost',
-#     user='root',
-#     password='',
-#     database='employee_data'
-# )
-
-connection=pymysql.connect(
-    host='db4free.net',
-    user='pension',
-    password='pensionscheme',
-    database='pension'
+connection = pymysql.connect(
+    host='localhost',
+    user='root',
+    password='',
+    database='employee_data'
 )
+
+# Configure pdfkit with the correct path to wkhtmltopdf
+pdfkit_config = pdfkit.configuration(wkhtmltopdf='/usr/local/bin/wkhtmltopdf')
 
 @app.route('/', methods=['POST', 'GET'])
 def login():
@@ -65,7 +61,6 @@ def home():
 @app.route('/admin')
 def admin():
     return render_template('admin.html')
-
 
 @app.route('/add')
 def add():
@@ -150,11 +145,15 @@ def category_pdf(category):
                 else:
                     return "Invalid category"
                 
-                pdf = pdfkit.from_string(html_content, False)
-                response = make_response(pdf)
-                response.headers['Content-Disposition'] = f'attachment; filename={category}.pdf'
-                response.headers['Content-Type'] = 'application/pdf'
-                return response
+                try:
+                    pdf = pdfkit.from_string(html_content, False, configuration=pdfkit_config)
+                    response = make_response(pdf)
+                    response.headers['Content-Disposition'] = f'attachment; filename={category}.pdf'
+                    response.headers['Content-Type'] = 'application/pdf'
+                    return response
+                except OSError as e:
+                    print(f'Error generating PDF: {e}')
+                    return "There was an error generating the PDF."
 
 
 @app.route('/users')
@@ -213,20 +212,20 @@ def download_pdf():
         connection.commit()
         base_url = request.base_url
         html_content = render_template('pdf.html', data=data, base_url=base_url)
-        pdf = pdfkit.from_string(html_content, False)
-        response = make_response(pdf)
-        response.headers['Content-Disposition'] = 'attachment; filename=pension_scheme.pdf'
-        response.headers['Content-Type'] = 'application/pdf'
-        return response
-
+        try:
+            pdf = pdfkit.from_string(html_content, False, configuration=pdfkit_config)
+            response = make_response(pdf)
+            response.headers['Content-Disposition'] = 'attachment; filename=pension_scheme.pdf'
+            response.headers['Content-Type'] = 'application/pdf'
+            return response
+        except OSError as e:
+            print(f'Error generating PDF: {e}')
+            return "There was an error generating the PDF."
 
 @app.route('/logout')
 def logout():
-    if 'username' or 'code' in session:
-        session.clear()
-        flash('You have been logged out', 'warning')
-        return redirect(url_for('login'))
-
+    session.clear()
+    return redirect(url_for('login'))
 
 if __name__ == "__main__":
     app.run(debug=True, port=8001)
