@@ -28,18 +28,6 @@
 </head>
 <body>
 <div class="container">
-    {% with messages=get_flashed_messages(with_categories=True) %}
-        {% if messages %}
-        {% for category,msg in messages %}
-        
-            <div class="alert alert-{{category}} alert-dismissible fade show  name" role="alert" >
-            <strong> {{msg}}</strong>
-            <button type="button" class="btn-close name1" data-bs-dismiss="alert" aria-label="close"></button>
-            </div>
-
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
     <div class="row">
         <div class="col-lg-4">
             <div class="elements">
