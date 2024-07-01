@@ -5,6 +5,8 @@ import pymysql
 app = Flask(__name__)
 
 app.secret_key = 'yvvrcyeryueyruehddsnjnjn'
+
+
 # connection = pymysql.connect(
 #     host='localhost',
 #     user='root',
@@ -224,7 +226,7 @@ def download_pdf():
 def logout():
     if 'username' or 'code' in session:
         session.clear()
-        flash('You have been logged out', 'warning')
+        flash('You have been logged out', 'danger')
         return redirect(url_for('login'))
 
 
