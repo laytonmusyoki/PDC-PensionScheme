@@ -1,20 +1,12 @@
 from flask import Flask, redirect, render_template, session, request, flash, url_for, make_response
-import pdfkit
+from weasyprint import HTML
 import pymysql
 
 app = Flask(__name__)
 
 app.secret_key = 'yvvrcyeryueyruehddsnjnjn'
 
-
-# connection = pymysql.connect(
-#     host='localhost',
-#     user='root',
-#     password='',
-#     database='employee_data'
-# )
-
-connection=pymysql.connect(
+connection = pymysql.connect(
     host='db4free.net',
     user='pension',
     password='pensionscheme',
@@ -152,7 +144,7 @@ def category_pdf(category):
                 else:
                     return "Invalid category"
                 
-                pdf = pdfkit.from_string(html_content, False)
+                pdf = HTML(string=html_content).write_pdf()
                 response = make_response(pdf)
                 response.headers['Content-Disposition'] = f'attachment; filename={category}.pdf'
                 response.headers['Content-Type'] = 'application/pdf'
@@ -215,7 +207,7 @@ def download_pdf():
         connection.commit()
         base_url = request.base_url
         html_content = render_template('pdf.html', data=data, base_url=base_url)
-        pdf = pdfkit.from_string(html_content, False)
+        pdf = HTML(string=html_content).write_pdf()
         response = make_response(pdf)
         response.headers['Content-Disposition'] = 'attachment; filename=pension_scheme.pdf'
         response.headers['Content-Type'] = 'application/pdf'
