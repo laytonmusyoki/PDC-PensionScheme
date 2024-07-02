@@ -2,6 +2,9 @@
 
 # Update package list and install dependencies
 apt-get update
+apt-get install -y software-properties-common
+add-apt-repository -y ppa:gnome3-team/gnome3
+apt-get update
 apt-get install -y \
   libpango-1.0-0 \
   libpango1.0-dev \
