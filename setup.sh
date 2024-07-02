@@ -19,3 +19,10 @@ apt-get install -y \
   zlib1g-dev \
   libpangoft2-1.0-0 \
   libpangocairo-1.0-0
+
+# Ensure Pango is up-to-date
+apt-get install --only-upgrade libpango-1.0-0
+
+# Upgrade pip and install requirements
+pip install --upgrade pip
+pip install -r requirements.txt
